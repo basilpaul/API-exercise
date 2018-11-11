@@ -1,0 +1,19 @@
+---
+test_name: All Female passengers who survived
+stages:
+  - name: Requirement 1
+    request:
+      url: http://passenger:5000/?sex=female&survived=1
+      method: GET
+    response:
+      status_code: 200
+
+---
+test_name: All passengers who are above 30 years and who survived
+stages:
+  - name: Requirement 2
+    request:
+      url: http://passenger:5000/?minage=30&survived=1
+      method: GET
+    response:
+      status_code: 200

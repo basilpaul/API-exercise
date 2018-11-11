@@ -1,0 +1,10 @@
+Flask
+healthcheck
+six
+flask-jsonpify
+flask-sqlalchemy
+flask-restful
+flask-mysql
+mysql-connector
+pyyaml
+tavern

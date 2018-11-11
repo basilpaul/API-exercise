@@ -1,49 +1,43 @@
-# API-exercise
+# API-exercise documentation
 
-This exercise is to assess your technical proficiency with Software Engineering, DevOps and Infrastructure tasks.
-There is no need to do all the exercises, but try to get as much done as you can, so we can get a good feel of your skillset.  Don't be afraid to step outside your comfort-zone and try something new.
+This is a Rest API using Python and Flask. An Api request to the end point will query the mysql database and display the result as a json object. The application and database are tested, built and deployed using docker and minikube.
 
-If you have any questions, feel free to reach out to us.
+## Tools used for testing
 
-## Exercise
+1. Python 3.6
+2. pip 18.1
+3. docker 17.12.1-ce
+4. minikube v0.30.0
 
-This exercise is split in several subtasks. We are curious to see where you feel most comfortable and where you struggle.
+## Steps to test
 
-### 0. Fork this repository
-All your changes should be made in a **private** fork of this repository. When you're done please, please:
-* Share your fork with the **container-solutions-pr-checkers** user (Settings -> Members -> Share with Member)
-* Make sure that you grant this user the Reporter role, so that our reviewers can check out the code using Git.
-* Reply to the email that asked you to do this API exercise, with a link to the repository that the container-solutions-pr-checkers user now should have access to.
+1. Setup local environment
+2. Clone this repo
+3. Run the install bash script within the repo(./install.sh)
 
-### 1. Setup & fill database
-In the root of this project you'll find a csv-file with passenger data from the Titanic. Create a database and fill it with the given data. SQL or NoSQL is your choice.
+## Healthcheck
 
-### 2. Create an API
-Create an HTTP-API (e.g. REST) that allows reading & writing (maybe even updating & deleting) data from your database.
-Tech stack and language are your choice.
+The application healthcheck is available using the url http://$(minikube ip):31318/healthcheck
+* Healtcheck can be used with monitoring solutions to send an alert if there is a failure
 
-### 3. Dockerize
-Automate setup of your database & API with Docker, so it can be run everywhere comfortably with one or two commands.  
-The following build tools are acceptable:
- * docker
- * docker-compose
- * groovy
- * minikube (see 4.)
+## Jobs
 
-No elaborate makefiles please.
+There are two jobs as part of the solution. 
 
-#### Hints
+1. migrations - This job performs the migration of data from the csv file to the mysql database. There is no actio to be performed. The migration happens as part of the initial setup
+2. integrationtest - This job performs a test using tavern and tests couple of GET requests for return code 200
 
-- [Docker Install](https://www.docker.com/get-started)
+## Use cases
 
-### 4. Deploy to Kubernetes
-Enable your Docker containers to be deployed on a Kubernetes cluster.
+1. All females who survived
+* curl -vv "http://$(minikube ip):31318/?sex=female&survived=1"
 
-#### Hints
+2. All passengers above 30 who survived
+* curl -vv "http://$(minikube ip):31318/?minage=30&survived=1"
 
-- Don't have a Kubernetes cluster to test against?
-  - [MiniKube](https://kubernetes.io/docs/setup/minikube/) (free, local)
-  - [GKE](https://cloud.google.com/kubernetes-engine/) (more realistic deployment, may cost something)
+3. All passenger information
+* curl -vv "http://$(minikube ip):31318/"
 
-### 5. Whatever you can think of
-Do you have more ideas to optimize your workflow or automate deployment? Feel free to go wild and dazzle us with your solutions.
+## Secrets
+
+The database credentials are provided as a secret

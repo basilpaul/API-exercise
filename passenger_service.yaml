@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: passenger
+spec:
+  type: NodePort
+  selector:
+    app: passenger
+  ports:
+    - nodePort: 31318
+      protocol: TCP
+      port: 5000
+      targetPort: 5000

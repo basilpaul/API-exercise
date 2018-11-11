@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: migrations
+spec:
+  template:
+    spec:
+      containers:
+        - name: passenger
+          image: passenger:1.0
+          command: ['python', 'generate_db.py']
+          env:
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-creds
+                  key: user
+
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-creds
+                  key: password
+
+            - name: MYSQL_HOST
+              value: mysql
+      restartPolicy: Never
+  backoffLimit: 5

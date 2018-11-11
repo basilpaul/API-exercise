@@ -1,0 +1,12 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: integrationtest
+spec:
+  template:
+    spec:
+      containers:
+        - name: passenger
+          image: passenger:1.0
+          command: ['py.test', 'test_passengers.tavern.yaml', '-v']
+      restartPolicy: Never
